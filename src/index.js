@@ -2,22 +2,24 @@ import express from 'express'
 import morgan from 'morgan'
 import serveStatic from 'serve-static'
 import path from 'path'
+import bodyParser from 'body-parser'
 
-import connectMongo from './models/mongo'
-import connectRedis from './models/Redis'
+import apiRoute from './route/api'
+import connectMongo from './model/mongo'
 
 connectMongo()
-connectRedis()
 
 const app = express()
 
 app.use(morgan('dev'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 app.use(serveStatic(path.join(__dirname, 'public'), {
   maxAge: '1d'
 }))
 
-app.get('/', (req, res) => {
-  res.send('hello!')
-})
+apiRoute(app)
 
 export default app
