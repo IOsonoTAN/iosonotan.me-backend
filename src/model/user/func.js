@@ -3,10 +3,10 @@ import Chance from 'chance'
 
 import redis from '../redis'
 import User from './schema'
-import config from '../../config'
+import config, { cacheKey } from '../../config'
 import { throwError } from '../../lib/response'
 
-const { hashing, cacheKeys } = config
+const { hashing } = config
 const chance = new Chance()
 
 const md5 = (data) => {
@@ -48,11 +48,11 @@ export const signIn = async (username, password) => {
     throwError('username or password was wrong', 'AUTH001')
   }
 
-  await redis.delwild(cacheKeys('user.wildcard', { username }), () => {})
+  await redis.delwild(cacheKey('user.wildcard', { username }), () => {})
 
   const token = generateToken()
 
-  await redis.SETEX(cacheKeys('user.token', { username, token }), 3600, JSON.stringify(user))
+  redis.setex(cacheKey('user.token', { token }), 3600, JSON.stringify(user))
 
   return {
     username,

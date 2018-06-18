@@ -23,3 +23,9 @@ export const responseError = (res, error, status = 400) => {
 
   res.status(status).send(errorObject(message, code))
 }
+
+export default {
+  errorObject,
+  throwError,
+  responseError
+}

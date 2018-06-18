@@ -1,7 +1,6 @@
 import env from './env'
-import cacheKeys from './cacheKeys'
 
+export { default as cacheKey } from './cacheKey'
 export default {
-  ...env,
-  cacheKeys
+  ...env
 }

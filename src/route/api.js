@@ -1,3 +1,4 @@
+import { validateToken } from '../middleware'
 import { signIn, signUp } from '../controller/auth'
 
 export default (app) => {
@@ -7,6 +8,10 @@ export default (app) => {
 
   app.post('/sign-in', signIn)
   app.post('/sign-up', signUp)
+
+  app.post('/', validateToken, (req, res) => {
+    res.send('POST!')
+  })
 
   return app
 }

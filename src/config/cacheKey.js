@@ -1,15 +1,15 @@
 import { get } from 'lodash'
 import { sprintf } from 'sprintf-js'
 
-const cacheKeys = {
+const keys = {
   user: {
-    token: 'user:%(username)s:%(token)s:auth',
+    token: 'user:%(token)s:token',
     wildcard: 'user:%(username)s:*'
   }
 }
 
 export default (prop, datas = {}) => {
-  const cacheKey = get(cacheKeys, prop)
+  const cacheKey = get(keys, prop)
 
   return sprintf(cacheKey, datas)
 }

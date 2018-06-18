@@ -1,3 +1,5 @@
+import { isTrue } from '../lib/helper'
+
 require('dotenv').config()
 
 export default {
@@ -12,5 +14,6 @@ export default {
     salt: {
       password: process.env.HASH_SALT_PASSWORD || false
     }
-  }
+  },
+  openRegister: isTrue(process.env.OPEN_REGISTER) || false
 }
