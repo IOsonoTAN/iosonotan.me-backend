@@ -52,7 +52,7 @@ export const signIn = async (username, password) => {
 
   const token = generateToken()
 
-  redis.setex(cacheKey('user.token', { token }), 3600, JSON.stringify(user))
+  redis.setex(cacheKey('user.token', { token }), config.cache.ttl.userToken, JSON.stringify(user))
 
   return {
     username,

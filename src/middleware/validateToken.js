@@ -1,6 +1,6 @@
 import redis from '../model/redis'
 import { responseError, throwError } from '../lib/response'
-import { cacheKey } from '../config'
+import config, { cacheKey } from '../config'
 
 export default async (req, res, next) => {
   try {
@@ -15,8 +15,7 @@ export default async (req, res, next) => {
       throwError('unauthorized', '1011')
     }
 
-    // extend ttl up to 1 hour.
-    redis.expire(tokenCacheKey, 3600)
+    redis.expire(tokenCacheKey, config.cache.ttl.userToken)
 
     next()
   } catch (err) {
