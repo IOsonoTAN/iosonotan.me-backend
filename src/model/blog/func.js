@@ -5,28 +5,32 @@ export const getContentById = async (objectId) => {
   const content = await Blog
     .findOne({ _id: objectId })
     .populate('user')
-  // const content = await Blog.findById(objectId)
 
   return content
 }
 
-export const getContentList = async (page = 1, options = {}) => {
+export const getContentList = async (page = 1, options = {}, limit = 9) => {
   try {
-    if (!options.status) {
-      options.status = 'published'
+    const queryOptions = {
+      status: (options.status ? options.status : 'published')
     }
-    if (!options.limit) {
-      options.limit = 9
+    if (options.category) {
+      queryOptions.category = options.category
+    }
+    if (options.tag) {
+      queryOptions.tag = {
+        '$in': [options.tag]
+      }
     }
 
     const contents = await Blog.paginate({
-      status: options.status,
+      ...queryOptions,
       publishDate: {
         $lte: DateTime.local().toISO()
       }
     }, {
       page,
-      limit: options.limit,
+      limit,
       sort: {
         publishDate: -1
       }

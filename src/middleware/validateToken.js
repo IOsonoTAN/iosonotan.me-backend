@@ -6,13 +6,13 @@ export default async (req, res, next) => {
   try {
     const token = req.headers['access-token']
     if (!token) {
-      throwError('unauthorized', '1010')
+      throwError('unauthorized', '1010', 401)
     }
 
     const tokenCacheKey = cacheKey('user.token', { token })
     const isUser = await redis.getAsync(tokenCacheKey)
     if (!isUser) {
-      throwError('unauthorized', '1011')
+      throwError('unauthorized', '1011', 401)
     }
     req.auth = {
       user: JSON.parse(isUser)
@@ -22,6 +22,6 @@ export default async (req, res, next) => {
 
     next()
   } catch (err) {
-    responseError(res, err)
+    responseError(res, err, err.status)
   }
 }

@@ -3,8 +3,11 @@ import { responseError, throwError } from '../lib/response'
 
 export const blogList = async (req, res) => {
   try {
-    const { page } = req.query
-    const contents = await Blog.getContentList(page)
+    const { page, category, tag } = req.query
+    const contents = await Blog.getContentList(page, {
+      category,
+      tag
+    })
 
     res.send(contents)
   } catch (err) {

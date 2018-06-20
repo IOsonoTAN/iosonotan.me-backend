@@ -43,9 +43,9 @@ export const generateToken = (length = 64, pool = undefined) => {
 export const signIn = async (username, password) => {
   const user = await User.findOne({ username })
   if (!user) {
-    throwError('user not found', 'AUTH000')
+    throwError('user not found', 'AUTH000', 401)
   } else if (!comparePassword(username, password, user.password)) {
-    throwError('username or password was wrong', 'AUTH001')
+    throwError('username or password was wrong', 'AUTH001', 401)
   }
 
   await redis.delwild(cacheKey('user.wildcard', { username }), () => {})
