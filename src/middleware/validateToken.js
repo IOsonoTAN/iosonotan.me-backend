@@ -14,6 +14,9 @@ export default async (req, res, next) => {
     if (!isUser) {
       throwError('unauthorized', '1011')
     }
+    req.auth = {
+      user: JSON.parse(isUser)
+    }
 
     redis.expire(tokenCacheKey, config.cache.ttl.userToken)
 

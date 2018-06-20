@@ -8,8 +8,8 @@ export const signIn = async (req, res) => {
     const isUser = await User.signIn(username, password)
 
     res.send(isUser)
-  } catch (e) {
-    responseError(res, e, e.status)
+  } catch (err) {
+    responseError(res, err, err.status)
   }
 }
 
@@ -20,7 +20,7 @@ export const signUp = async (req, res) => {
     const newUser = await User.signUp(username, password)
 
     res.send(newUser)
-  } catch (e) {
-    responseError(res, e, e.status)
+  } catch (err) {
+    responseError(res, err, err.status)
   }
 }
