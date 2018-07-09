@@ -48,11 +48,13 @@ export const signIn = async (username, password) => {
     throwError('username or password was wrong', 'AUTH001', 401)
   }
 
-  await redis.delwild(cacheKey('user.wildcard', { username }), () => {})
+  const uToken = await redis.getAsync(cacheKey('user.uToken', { username }))
+  redis.del(cacheKey('user.token', { token: uToken }))
 
   const token = generateToken()
 
   redis.setex(cacheKey('user.token', { token }), config.cache.ttl.userToken, JSON.stringify(user))
+  redis.setex(cacheKey('user.uToken', { username }), config.cache.ttl.userToken, token)
 
   return {
     username,

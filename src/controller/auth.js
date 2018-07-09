@@ -1,7 +1,7 @@
 import User from '../model/user'
 import { responseError } from '../lib/response'
 import redisClient from '../model/redis'
-import config from '../config'
+import { cacheKey } from '../config'
 
 export const signIn = async (req, res) => {
   try {
@@ -20,7 +20,7 @@ export const verifyToken = async (req, res) => {
     const { token } = req.body
     let isExpired = false
 
-    const remainTTL = await redisClient.ttlAsync(config.cacheKey('user.token', { token }))
+    const remainTTL = await redisClient.ttlAsync(cacheKey('user.token', { token }))
     if (remainTTL <= 0) {
       isExpired = true
     }

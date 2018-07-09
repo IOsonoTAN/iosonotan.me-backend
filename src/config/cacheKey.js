@@ -4,6 +4,7 @@ import { sprintf } from 'sprintf-js'
 export const keys = {
   user: {
     token: 'user:%(token)s:token',
+    uToken: 'user:%(username)s:utoken',
     wildcard: 'user:%(username)s:*'
   }
 }

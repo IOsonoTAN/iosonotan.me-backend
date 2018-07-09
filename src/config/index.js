@@ -2,6 +2,9 @@ import env from './env'
 import cacheKey from './cacheKey'
 
 export default {
-  ...env,
+  ...env
+}
+export {
+  env,
   cacheKey
 }
