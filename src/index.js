@@ -22,7 +22,11 @@ app.use(bodyParser.urlencoded({
   extended: false
 }))
 app.use(serveStatic(path.join(__dirname, 'public'), {
-  maxAge: '1d'
+  maxAge: '1d',
+  etag: true,
+  setHeaders: (res, path, stat) => {
+    res.set('x-timestamp', Date.now())
+  }
 }))
 
 apiRoute(app)

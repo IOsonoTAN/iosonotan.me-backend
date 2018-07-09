@@ -1,7 +1,7 @@
 import { get } from 'lodash'
 import { sprintf } from 'sprintf-js'
 
-const keys = {
+export const keys = {
   user: {
     token: 'user:%(token)s:token',
     wildcard: 'user:%(username)s:*'
