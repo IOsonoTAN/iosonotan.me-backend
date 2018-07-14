@@ -1,5 +1,14 @@
-import func from './func'
+import func, {
+  createBlog,
+  getContentById,
+  getContentList
+} from './func'
 
 export default {
   ...func
+}
+export {
+  createBlog,
+  getContentById,
+  getContentList
 }

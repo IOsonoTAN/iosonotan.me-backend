@@ -55,21 +55,8 @@ export const createBlog = async (user, data = {}) => {
   }
 }
 
-export const updateBlog = async (objectId, data = {}) => {
-  try {
-    const result = await Blog.updateOne({
-      _id: objectId
-    }, data)
-
-    return (result && result.ok)
-  } catch (err) {
-    throw err
-  }
-}
-
 export default {
   getContentList,
   getContentById,
-  createBlog,
-  updateBlog
+  createBlog
 }

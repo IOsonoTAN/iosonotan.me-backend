@@ -45,7 +45,16 @@ export const createBlog = async (req, res) => {
 
 export const updateBlog = async (req, res) => {
   try {
-    res.send('updateBlog')
+    const { _id: objectId, title, tag, category, detail, status, publishDate } = req.body
+
+    const result = await Blog.updateBlog(objectId, {
+      title, tag, category, detail, status, publishDate
+    })
+
+    res.send({
+      body: req.body,
+      result
+    })
   } catch (err) {
     responseError(res, err, err.status)
   }
